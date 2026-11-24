@@ -1,0 +1,12 @@
+Title: Single-Atom Ni-N4 Catalysts for Electrochemical CO2 Reduction (Synthetic Example)
+Authors: Lin Chen, Wei Zhang
+Year: 2025
+DOI: 10.0000/example.nanopub.2025.001
+
+1. Results and Discussion
+
+At -0.8 V vs. RHE in 0.5 M KHCO3 electrolyte, the Ni-N4/C catalyst achieved a CO Faradaic efficiency of 96.4% with a partial current density of 18.2 mA cm^-2 (Figure 2a).
+
+In contrast, the control N-doped carbon (N-C) without Ni sites showed a CO Faradaic efficiency of only 14.1% under identical testing conditions (Table 1). Previous studies reported that bulk Ni foil predominantly promotes hydrogen evolution rather than CO production [12].
+
+Long-term stability tests at -0.8 V vs. RHE maintained over 92% CO Faradaic efficiency for 24 h, whereas catalyst performance under acidic electrolyte (pH < 3) was not evaluated in this work.

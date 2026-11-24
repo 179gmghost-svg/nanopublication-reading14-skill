@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://play.bohrium.com/schemas/nanopublication-reader/v1.json",
+  "title": "Nanopublication Scientific Reading Result Schema",
+  "type": "object",
+  "required": [
+    "case_id",
+    "status",
+    "source_metadata",
+    "nanopublications",
+    "uncertainties"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["completed", "partial", "indeterminable", "refused"]
+    },
+    "status_reason": {
+      "type": ["string", "null"]
+    },
+    "answer": {
+      "type": ["string", "object", "array", "null"],
+      "description": "Primary task answer matching the case output_contract if applicable."
+    },
+    "source_metadata": {
+      "type": "object",
+      "required": ["doc_id", "title", "authors", "year", "source_file"],
+      "properties": {
+        "doc_id": { "type": "string" },
+        "title": { "type": ["string", "null"] },
+        "authors": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "year": { "type": ["integer", "string", "null"] },
+        "venue_or_publisher": { "type": ["string", "null"] },
+        "doi_or_identifier": { "type": ["string", "null"] },
+        "version": { "type": ["string", "null"] },
+        "source_file": { "type": "string" },
+        "missing_metadata": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "nanopublications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nanopub_id",
+          "assertion",
+          "evidence",
+          "claim_status"
+        ],
+        "properties": {
+          "nanopub_id": { "type": "string" },
+          "claim_status": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "partially_supported",
+              "conflicting",
+              "unreported",
+              "indeterminable"
+            ]
+          },
+          "assertion": {
+            "type": "object",
+            "required": [
+              "statement",
+              "subject",
+              "predicate",
+              "object",
+              "polarity"
+            ],
+            "properties": {
+              "statement": { "type": "string", "minLength": 5 },
+              "subject": { "type": "string", "minLength": 1 },
+              "predicate": {
+                "type": "string",
+                "enum": [
+                  "increases",
+                  "decreases",
+                  "causes",
+                  "correlates_with",
+                  "outperforms",
+                  "inhibits",
+                  "equals",
+                  "measured_as",
+                  "contradicts",
+                  "associated_with",
+                  "requires",
+                  "other"
+                ]
+              },
+              "object": { "type": "string", "minLength": 1 },
+              "quantitative_value": { "type": ["string", "number", "null"] },
+              "units": { "type": ["string", "null"] },
+              "conditions_and_scope": { "type": ["string", "null"] },
+              "polarity": {
+                "type": "string",
+                "enum": ["positive", "negative", "neutral", "conditional", "inconclusive"]
+              }
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["quote", "evidence_type", "location"],
+              "properties": {
+                "quote": { "type": "string" },
+                "evidence_type": {
+                  "type": "string",
+                  "enum": [
+                    "direct_experimental",
+                    "statistical_result",
+                    "visual_chart_or_table",
+                    "indirect_inference",
+                    "cited_prior_work",
+                    "unreported"
+                  ]
+                },
+                "extraction_method": {
+                  "type": "string",
+                  "enum": ["text_layer", "ocr", "visual_inspection", "table_parse", "metadata"]
+                },
+                "cited_reference": { "type": ["string", "null"] },
+                "reasoning_note": { "type": ["string", "null"] },
+                "location": {
+                  "type": "object",
+                  "required": ["page", "section", "para_id"],
+                  "properties": {
+                    "page": { "type": ["integer", "null"] },
+                    "section": { "type": ["string", "null"] },
+                    "para_id": { "type": ["string", "null"] },
+                    "figure_or_table": { "type": ["string", "null"] },
+                    "equation": { "type": ["string", "null"] }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "conflicts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "locations"],
+        "properties": {
+          "description": { "type": "string" },
+          "locations": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "reason"],
+        "properties": {
+          "item": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "change_records": {
+      "type": "array",
+      "description": "Repairs made after the automated audit: what changed and why.",
+      "items": {
+        "type": "object",
+        "required": ["change", "reason"],
+        "properties": {
+          "change": { "type": "string" },
+          "reason": { "type": "string" },
+          "at": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "quality_audit": {
+      "type": "object",
+      "description": "Summary copied from validate_nanopub.py (error_count, warning_count, quote_alignment_rate).",
+      "additionalProperties": true
+    }
+  }
+}

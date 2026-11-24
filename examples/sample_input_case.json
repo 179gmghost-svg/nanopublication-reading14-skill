@@ -1,0 +1,9 @@
+{
+  "_note": "SYNTHETIC MINIMAL EXAMPLE ONLY — NOT an official benchmark case.",
+  "case_id": "example-catalyst-001",
+  "task": "Decompose the main performance claims into atomic Nanopublications, bind minimal sufficient verbatim evidence with page/section/paragraph anchors, distinguish cited prior work, and flag unreported conditions.",
+  "input_files": ["examples/sample_source_excerpt.txt"],
+  "output_contract": {
+    "required_fields": ["case_id", "status", "source_metadata", "nanopublications", "uncertainties"]
+  }
+}
